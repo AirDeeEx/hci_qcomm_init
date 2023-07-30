@@ -10,7 +10,7 @@ CFLAGS   += -static
 CFLAGS   += -g
 
 CPPFLAGS += -I.
-CPPFLAGS += -I./common/inc
+CPPFLAGS += -I./common/include
 CPPFLAGS += -DFEATURE_BT_QSOC
 CPPFLAGS += -DFEATURE_BT_QSOC_SLEEP
 CPPFLAGS += -DFEATURE_BT_QSOC_NVM_EFS_MODE
@@ -68,6 +68,9 @@ endif
 APP_NAME := hci_qcomm_init
 
 SRCLIST := bthci_qcomm_linux.cpp
+
+SRCLIST += common/strlcpy.c
+
 SRCLIST += bthci_qcomm_linux_uart.c
 SRCLIST += bthci_qcomm_common.c
 SRCLIST += btqsocnvmplatform_linux.c

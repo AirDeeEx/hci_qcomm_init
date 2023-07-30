@@ -43,6 +43,7 @@ Qualcomm Technologies Confidential and Proprietary
 #include <ctype.h>
 #include <string.h>
 #include <errno.h>
+#include "strlcpy.h"
 
 #include "btqsocnvmplatform.h"
 #include "btqsocnvm.h"
