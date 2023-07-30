@@ -5,7 +5,7 @@
 # sources and intermediate files are separated
 vpath %.c $(SRCDIR)
 
-CC=gcc
+CC=$(CROSS_COMPILE)gcc
 CFLAGS   += -static
 CFLAGS   += -g
 
@@ -117,3 +117,6 @@ all: $(APP_NAME)
 
 $(APP_NAME): $(SRCLIST)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+
+clean:
+	rm -f $(APP_NAME)
