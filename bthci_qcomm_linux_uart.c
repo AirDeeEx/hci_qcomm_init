@@ -162,8 +162,9 @@ extern uint32 starting_baud;    /* JMF: shoddy global */
 #define APPS_RIVA_BT_CMD_CH  "/dev/smd3"
 #define WCNSS_SMD_CH_STATE  "/sys/devices/platform/wcnss_wlan.0/smd_channel_ready"
 
+#ifdef ANDROID
 static char transport_type[PROPERTY_VALUE_MAX];
-
+#endif
 
 /*===========================================================================
 FUNCTION   bt_hci_set_transport
@@ -248,8 +249,10 @@ int bt_hci_pfal_init_transport ( bt_hci_transport_device_type bt_hci_transport_d
   int fd_wcnss;
   int nread;
   char buf[11];
+#ifdef ANDROID
   char ssrvalue[PROPERTY_VALUE_MAX]= {'\0'};
   ssrvalue[0] = '0';
+#endif
   fd_wcnss = open(WCNSS_SMD_CH_STATE, (O_RDONLY | O_NOCTTY));
 
   if(fd_wcnss < 0)
@@ -296,14 +299,15 @@ int bt_hci_pfal_init_transport ( bt_hci_transport_device_type bt_hci_transport_d
      ensure the smd port is successfully opened.
      TODO: Following sleep to be removed once SMD port is successfully
      opened immediately on return from the aforementioned open call */
-
-  property_get("bluetooth.isSSR", ssrvalue, "");
+#ifdef ANDROID
+  property_get("bluetooth.isSSR", ssrvalue, ""); //TODO: non-Android linux platforms
   if(ssrvalue[0] == '1')
   {
       BTHCI_QCOMM_ERROR("bt_hci_pfal_init_transport:going to sleep for .5sec\n");
       if(BT_HCI_SMD == bt_hci_transport_device.type)
           usleep(500000);
   }
+#endif
 
   if (tcflush(trans_fd, TCIOFLUSH) < 0)
   {

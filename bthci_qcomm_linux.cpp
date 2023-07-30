@@ -62,7 +62,6 @@ All Rights Reserved. Qualcomm Technologies Proprietary and Confidential.
 #include <sys/ioctl.h>
 #include <time.h>
 #include <termios.h>
-#include <cutils/properties.h>
 
 #include "comdef.h"
 #include "bthci_qcomm.h"
@@ -649,6 +648,7 @@ boolean bt_hci_qcomm_pfal_get_bdaddress ( uint8 *pCmdBuffer )
 
 bt_qsoc_enum_wlan_type bt_hci_qcomm_pfal_get_wlan_type( void )
 {
+#ifdef ANDROID
   static char ath6kl_supported[PROPERTY_VALUE_MAX];
   bt_qsoc_enum_wlan_type rval = BT_QSOC_WLAN_DEFAULT;
 
@@ -662,6 +662,9 @@ bt_qsoc_enum_wlan_type bt_hci_qcomm_pfal_get_wlan_type( void )
   {
     rval = BT_QSOC_WLAN_LIBRA;
   }
+#else
+  bt_qsoc_enum_wlan_type rval = BT_QSOC_WLAN_LIBRA;   //TODO: dynamic select for non-Android linux platforms
+#endif
 
   fprintf(stderr, "bt_hci_qcomm_pfal_get_wlan_type: %d\n", rval);
   fflush (stderr);

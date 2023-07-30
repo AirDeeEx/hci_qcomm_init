@@ -86,7 +86,7 @@ bt_qsoc_init_st_enum_type bt_qsoc_init_state;
 static bt_qsoc_struct_type       bt_qsoc;
 
 /* Variables to identify the trasport used */
-bt_hci_transport_device_type bt_hci_transport_device;
+extern bt_hci_transport_device_type bt_hci_transport_device;
 
 /* Default Bluetooth address if read from NV fails, same in AMSS */
 static const uint8  default_bt_bd_addr[] =
